@@ -48,23 +48,7 @@ const Projects = () => {
           </div>
           
           {/* Category Filter */}
-          <div className={`mb-12 border-b border-gray-800 pb-4 overflow-x-auto opacity-0 ${loaded ? 'animate-slide-down' : ''}`} style={{ animationDelay: '0.3s' }}>
-            <div className="flex space-x-6 min-w-max">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setFilter(category)}
-                  className={`text-sm py-2 relative whitespace-nowrap transition-colors ${
-                    filter === category 
-                      ? 'text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white' 
-                      : 'text-gray-400 hover:text-gray-200'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
+          
           
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">

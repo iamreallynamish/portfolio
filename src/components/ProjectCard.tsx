@@ -74,14 +74,10 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         <div className="absolute bottom-0 right-0 p-6 z-20 text-right">
           <div className="flex flex-col gap-2 items-end text-xs">
             <div className="flex items-center gap-2">
-              <span className="text-gray-300">{project.categories[0].toUpperCase()}</span>
+
             </div>
             
-            <div className="flex flex-col gap-1 mt-2 text-gray-300">
-              <div className="text-xs">f/1.5</div>
-              <div className="text-xs">1/200s</div>
-              <div className="text-xs">ISO 100</div>
-            </div>
+            
             
             <div className="mt-2 text-xs text-gray-300 flex items-center gap-2">
               <Clock size={12} />
@@ -96,11 +92,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           isHovered ? "opacity-100" : "opacity-0",
           "z-10"
         )}>
-          <div className="px-6 text-center">
-            <p className="text-gray-200 text-sm">
-              {project.description}
-            </p>
-          </div>
+          
         </div>
       </div>
     </Link>

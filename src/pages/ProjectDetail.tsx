@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { projects } from '@/data/projects';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import BackgroundAnimation from '@/components/BackgroundAnimation';
 import Navbar from '@/components/Navbar';
 
@@ -12,6 +12,7 @@ const ProjectDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const project = projects.find(p => p.id === id);
   const navigate = useNavigate();
   
@@ -101,19 +102,6 @@ const ProjectDetail = () => {
                 </div>
               </div>
               
-              {/* About The Project Section with Icon */}
-              <div className="border-t border-white/20 pt-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-5 h-5 rounded-full border border-white flex items-center justify-center">
-                    <span className="text-xs">i</span>
-                  </div>
-                  <h2 className="text-sm font-mono uppercase">ABOUT THE PROJECT</h2>
-                </div>
-                <p className="text-sm text-white/90">
-                  {project.description}
-                </p>
-              </div>
-              
               {/* Tags Section with Icon */}
               <div className="border-t border-white/20 pt-8">
                 <div className="flex items-center gap-2 mb-4">
@@ -170,17 +158,18 @@ const ProjectDetail = () => {
           
           {/* Right Side - Main Image with Navigation */}
           <div className={`bg-white/5 flex items-center justify-center relative group ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-            <div className="w-full h-full flex items-center justify-center p-6 md:p-10 relative overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center p-6 md:p-10 relative overflow-hidden max-h-[80vh]">
               <img 
                 key={currentImageIndex}
                 src={project.images[currentImageIndex]} 
                 alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-[110vh] object-contain cursor-pointer"
                 style={{
                   animation: isAnimating 
                     ? `${direction > 0 ? 'slideFromRight' : 'slideFromLeft'} 0.5s ease-in-out`
                     : ''
                 }}
+                onClick={() => setIsModalOpen(true)}
               />
               
               {/* Navigation Arrows */}
@@ -211,6 +200,31 @@ const ProjectDetail = () => {
           </div>
         </div>
       </main>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 modal-overlay"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="relative w-full h-full flex items-center justify-center modal-content"
+            onClick={e => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <img 
+              src={project.images[currentImageIndex]} 
+              alt={project.title}
+              className="max-w-full max-h-screen object-contain p-4"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
